@@ -15,7 +15,7 @@ export default function TaskFilter({
   setFilterMember,
 }) {
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-4 px-8">
       <Select value={filterProject} onValueChange={setFilterProject}>
         <SelectTrigger className="w-48">
           <SelectValue placeholder="Filter by project" />

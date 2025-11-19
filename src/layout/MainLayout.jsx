@@ -77,7 +77,7 @@ export default function MainLayout() {
       </aside>
 
       {/* Page Content */}
-      <main className="flex-1 p-8">
+      <main className="flex-1 h-screen overflow-auto">
         <Outlet />
       </main>
     </div>

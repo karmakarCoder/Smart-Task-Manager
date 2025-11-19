@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { ActivityLog, Projects, Tasks, Teams } from "../data/staticData";
+import { toast } from "sonner";
 
 const DataContext = createContext();
 
@@ -43,7 +44,7 @@ export const DataProvider = ({ children }) => {
     localStorage.setItem("activityLog", JSON.stringify(activityLog));
   }, [teams, projects, tasks, activityLog]);
 
-  // team crud
+  //======= team crud =========
   const addTeam = (team) => {
     const newTeam = { ...team, id: `team_${Date.now()}` };
     setTeams([...teams, newTeam]);
@@ -55,23 +56,27 @@ export const DataProvider = ({ children }) => {
   // project curd
   const addProject = (project) =>
     setProjects([...projects, { ...project, id: `project_${Date.now()}` }]);
+
+  //========= update project ==========
   const updateProject = (id, projectData) =>
     setProjects(
       projects.map((p) => (p.id === id ? { ...p, ...projectData } : p))
     );
+
+  //====== delete project ===========
   const deleteProject = (id) => {
     setProjects(projects.filter((p) => p.id !== id));
     setTasks(tasks.filter((t) => t.projectId !== id));
   };
 
-  // task crud
+  //========== task crud ============
   const addTask = (task) =>
     setTasks([...tasks, { ...task, id: `task_${Date.now()}` }]);
   const updateTask = (id, taskData) =>
     setTasks(tasks.map((t) => (t.id === id ? { ...t, ...taskData } : t)));
   const deleteTask = (id) => setTasks(tasks.filter((t) => t.id !== id));
 
-  // activity log
+  //========= activity log ==========
   const addActivity = (activity) => {
     const newActivity = {
       ...activity,
@@ -81,7 +86,28 @@ export const DataProvider = ({ children }) => {
     setActivityLog([newActivity, ...activityLog]);
   };
 
-  // reasign task
+  const overloadInfo = teams.flatMap((team) =>
+    team.members.map((member) => {
+      const assignedTasks = tasks.filter(
+        (task) => task.assignedTo === member.id && task.status !== "Done"
+      );
+
+      const isOverloaded = assignedTasks.length > member.capacity;
+
+      return {
+        team: team.name,
+        member: member.name,
+        assignedTasks: assignedTasks.length,
+        capacity: member.capacity,
+        isOverloaded,
+      };
+    })
+  );
+
+  // get only overloaded members
+  const overloadedMembers = overloadInfo.filter((m) => m.isOverloaded);
+
+  //========== reasign task ==========
 
   const reassignTasks = () => {
     const updatedTasks = [...tasks];
@@ -99,6 +125,7 @@ export const DataProvider = ({ children }) => {
         const memberTasks = teamTasks.filter((t) => t.assignedTo === member.id);
 
         const overload = memberTasks.length - member.capacity;
+
         if (overload <= 0) return;
 
         const tasksToReassign = memberTasks
@@ -129,9 +156,9 @@ export const DataProvider = ({ children }) => {
             };
 
             reassignments.push({
-              id: `activity_${Date.now()}_${Math.random()}`,
+              id: `activity_${Math.random()}`,
               taskId: task.id,
-              taskTitle: task.title,
+              taskTitle: task?.title,
               fromMember: member.name,
               toMember: availableMember.name,
               timestamp: new Date().toISOString(),
@@ -141,6 +168,7 @@ export const DataProvider = ({ children }) => {
       });
     });
 
+    toast.success("Tasks reassigned successfully!");
     setTasks(updatedTasks);
     setActivityLog([...reassignments, ...activityLog]);
   };
@@ -163,6 +191,7 @@ export const DataProvider = ({ children }) => {
         deleteTask,
         addActivity,
         reassignTasks,
+        overloadedMembers,
       }}
     >
       {children}

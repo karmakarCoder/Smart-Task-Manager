@@ -7,7 +7,6 @@ export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [users, setUsers] = useState(userList);
 
-  // Load saved auth data on mount
   useEffect(() => {
     const storedUser = localStorage.getItem("currentUser");
     if (storedUser) {
@@ -20,7 +19,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  // LOGIN
+  // login
   const login = (email, password) => {
     const user = users.find(
       (u) => u.email === email && u.password === password
@@ -35,7 +34,7 @@ export const AuthProvider = ({ children }) => {
     return false;
   };
 
-  // REGISTER
+  // sign up
   const register = (name, email, password) => {
     if (users.find((u) => u.email === email)) {
       return false;
@@ -59,7 +58,7 @@ export const AuthProvider = ({ children }) => {
     return true;
   };
 
-  // LOGOUT
+  // logout
   const logout = () => {
     setCurrentUser(null);
     localStorage.removeItem("currentUser");
@@ -72,7 +71,7 @@ export const AuthProvider = ({ children }) => {
         login,
         register,
         logout,
-        isAuthenticated: !!currentUser,
+        isAuthenticated: currentUser,
       }}
     >
       {children}
@@ -80,7 +79,7 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// CUSTOM HOOK
+// Custom hook
 export const useAuth = () => {
   const context = useContext(AuthContext);
 

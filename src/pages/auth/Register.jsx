@@ -11,10 +11,9 @@ import RegisterForm from "../../components/RegisterComponents/RegisterForm";
 export default function Register() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
-      <Card className="w-full max-w-md shadow-lg">
-        <CardHeader className="space-y-1">
-          <div className="flex items-center gap-2 mb-2">
-            <UserPlus className="h-6 w-6 text-primary" />
+      <Card className="w-full max-w-md">
+        <CardHeader className="gap-1">
+          <div className="flex items-center">
             <CardTitle className="text-2xl font-bold">Create Account</CardTitle>
           </div>
           <CardDescription>

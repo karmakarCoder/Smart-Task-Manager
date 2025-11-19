@@ -13,8 +13,6 @@ export default function Projects() {
     useData();
   const { currentUser } = useAuth();
 
-  console.log(projects);
-
   const [isOpen, setIsOpen] = useState(false);
   const [editingProject, setEditingProject] = useState(null);
 
@@ -30,22 +28,26 @@ export default function Projects() {
     setEditingProject(null);
   };
 
+  // handle edit
   const handleEdit = (project) => {
     setEditingProject(project.id);
     setIsOpen(true);
   };
 
+  // handle delete
   const handleDelete = (id) => {
     deleteProject(id);
     toast.success("Project deleted successfully!");
   };
 
+  // default value
   const defaultValues = editingProject
     ? projects.find((p) => p.id === editingProject)
     : { name: "", description: "", teamId: "" };
+
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between px-8 py-5 border-b sticky top-0 left-0 bg-white z-50">
         <div>
           <h1 className="text-3xl font-bold flex items-center gap-2">
             <FolderKanban className="h-8 w-8 text-primary" />
@@ -64,7 +66,7 @@ export default function Projects() {
         />
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-3 gap-4 p-8">
         {projects.map((project) => (
           <ProjectCard
             key={project.id}

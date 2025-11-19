@@ -15,19 +15,18 @@ export default function TaskItem({ task, projects, teams, onEdit, onDelete }) {
   const assignee = team?.members.find((m) => m.id === task.assignedTo);
 
   const getPriorityColor = (priority) => {
-    if (priority === "High")
-      return "bg-destructive text-destructive-foreground";
-    if (priority === "Medium") return "bg-warning text-foreground";
-    return "bg-secondary text-secondary-foreground";
+    if (priority === "High") return "bg-destructive text-white";
+    if (priority === "Medium") return "bg-yellow-500 text-white";
+    return "bg-sky-400 text-white";
   };
 
   const getStatusColor = (status) => {
-    if (status === "Done") return "bg-success text-primary-foreground";
+    if (status === "Done") return "bg-green-600 text-primary-foreground";
     if (status === "In Progress") return "bg-primary text-primary-foreground";
     return "bg-muted text-muted-foreground";
   };
   return (
-    <Card className="shadow-md hover:shadow-lg transition-shadow">
+    <Card>
       <CardHeader>
         <div className="flex items-start justify-between">
           <div>

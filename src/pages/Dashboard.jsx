@@ -7,12 +7,17 @@ import RecentAsignment from "../components/DashboardComponents/RecentAsignment";
 import { useData } from "../contexts/DataContext";
 
 export default function Dashboard() {
-  const { teams, projects, tasks, activityLog, reassignTasks } = useData();
-  console.log(teams);
+  const {
+    teams,
+    projects,
+    tasks,
+    activityLog,
+    reassignTasks,
+    overloadedMembers,
+  } = useData();
 
   const handleReassign = () => {
     reassignTasks();
-    toast.success("Tasks reassigned successfully!");
   };
 
   // Stats
@@ -46,13 +51,17 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-6">
-      <DashboardHeader onReassign={handleReassign} />
+      <DashboardHeader
+        onReassign={handleReassign}
+        overloadedMembers={overloadedMembers}
+      />
+      <div className="p-8 space-y-6">
+        <StatsCard stats={stats} />
 
-      <StatsCard stats={stats} />
-
-      <div className="grid grid-cols-2 gap-6">
-        <TeamSummary teamStats={teamStats} />
-        <RecentAsignment activityLog={activityLog} />
+        <div className="grid grid-cols-2 gap-6">
+          <TeamSummary teamStats={teamStats} />
+          <RecentAsignment activityLog={activityLog} />
+        </div>
       </div>
     </div>
   );

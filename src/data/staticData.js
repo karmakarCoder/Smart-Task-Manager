@@ -131,13 +131,4 @@ export const Tasks = [
   },
 ];
 
-export const ActivityLog = [
-  {
-    id: "log_1",
-    taskId: "task_3",
-    taskTitle: "API Integration",
-    fromMember: "Riya",
-    toMember: "Farhan",
-    timestamp: new Date(Date.now() - 3600000).toISOString(),
-  },
-];
+export const ActivityLog = [];

@@ -4,7 +4,7 @@ import { FolderKanban, ListChecks } from "lucide-react";
 export default function StatsCard({ stats }) {
   return (
     <div className="grid grid-cols-4 gap-4">
-      <Card className="shadow-md">
+      <Card>
         <CardHeader className="flex flex-row items-center justify-between pb-2">
           <CardTitle className="text-sm font-medium">Total Projects</CardTitle>
           <FolderKanban className="h-4 w-4 text-muted-foreground" />
@@ -14,7 +14,7 @@ export default function StatsCard({ stats }) {
         </CardContent>
       </Card>
 
-      <Card className="shadow-md">
+      <Card>
         <CardHeader className="flex flex-row items-center justify-between pb-2">
           <CardTitle className="text-sm font-medium">Total Tasks</CardTitle>
           <ListChecks className="h-4 w-4 text-muted-foreground" />
@@ -24,7 +24,7 @@ export default function StatsCard({ stats }) {
         </CardContent>
       </Card>
 
-      <Card className="shadow-md">
+      <Card>
         <CardHeader className="flex flex-row items-center justify-between pb-2">
           <CardTitle className="text-sm font-medium">Active Tasks</CardTitle>
           <ListChecks className="h-4 w-4 text-warning" />
@@ -34,7 +34,7 @@ export default function StatsCard({ stats }) {
         </CardContent>
       </Card>
 
-      <Card className="shadow-md">
+      <Card>
         <CardHeader className="flex flex-row items-center justify-between pb-2">
           <CardTitle className="text-sm font-medium">Completed</CardTitle>
           <ListChecks className="h-4 w-4 text-success" />

@@ -11,12 +11,12 @@ import TaskForm from "../components/TaskComponents/TaskForm";
 
 export default function Task() {
   const { tasks, projects, teams, deleteTask } = useData();
-
   const [isOpen, setIsOpen] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
   const [filterProject, setFilterProject] = useState("all");
   const [filterMember, setFilterMember] = useState("all");
 
+  // filter task
   const filteredTasks = tasks.filter((task) => {
     if (filterProject !== "all" && task.projectId !== filterProject)
       return false;
@@ -25,6 +25,7 @@ export default function Task() {
     return true;
   });
 
+  // edit task
   const handleEdit = (task) => {
     setEditingTask(task);
     setIsOpen(true);
@@ -36,7 +37,7 @@ export default function Task() {
   };
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between py-5 px-8 border-b sticky top-0 left-0 bg-white z-50">
         <div>
           <h1 className="text-3xl font-bold flex items-center gap-2">
             <ListChecks className="h-8 w-8 text-primary" />
@@ -64,7 +65,7 @@ export default function Task() {
       />
 
       {/* Task List */}
-      <div className="space-y-3">
+      <div className="space-y-3 p-8">
         {filteredTasks.map((task) => (
           <TaskItem
             key={task.id}

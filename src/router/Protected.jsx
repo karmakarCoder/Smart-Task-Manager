@@ -1,13 +1,13 @@
 import { Navigate } from "react-router-dom";
 
-import Layout from "./Layout";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Protected({ children }) {
-  const { isAuthenticated } = useAuth();
+  const { currentUser } = useAuth();
 
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+  if (currentUser) {
+    return children;
   }
 
-  return <Layout>{children}</Layout>;
+  return <Navigate to="/login" replace />;
 }

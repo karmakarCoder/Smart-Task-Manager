@@ -6,16 +6,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-
 import { Trash2, Pencil, Users } from "lucide-react";
 
 export const ProjectCard = ({ project, handleEdit, handleDelete, teams }) => {
   const team = teams.find((t) => t.id === project.teamId);
   return (
-    <Card
-      key={project.id}
-      className="shadow-md hover:shadow-lg transition-shadow"
-    >
+    <Card key={project.id}>
       <CardHeader>
         <CardTitle className="flex items-start justify-between">
           <span>{project.name}</span>
